@@ -2,10 +2,10 @@
   <v-app>
     <v-main>
       <v-container fluid class="fill-height">
-        <v-row align="center" justify="center">
+        <v-row align-itens="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="pa-6" elevation="10">
-              <v-card-title class="text-h6 mb-4">Cadastre seu usuário: </v-card-title>
+              <v-card-title class="text-h6 mb-4">Registro</v-card-title>
 
               <v-form @submit.prevent="register">
                 <v-text-field

@@ -8,13 +8,17 @@ Vue.use(Vuetify)
 
 import LoginComponent from './components/LoginComponent.vue'
 import RegisterComponent from './components/RegisterComponent.vue'
+import HomeComponent from './components/HomeComponent.vue';
+import PostsView from './components/PostsView.vue';
 
 new Vue({
   el: '#app',
   vuetify: new Vuetify(),
   components: {
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent,
+    PostsView
   },
   methods: {
     logout() {
