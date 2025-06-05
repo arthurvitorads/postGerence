@@ -1,13 +1,60 @@
 <template>
   <v-app>
-    <v-container>
-      <v-form @submit.prevent="login">
-        <v-text-field v-model="email" label="Email"></v-text-field>
-        <v-text-field v-model="password" label="Senha" type="password"></v-text-field>
-        <v-btn type="submit" color="primary">Entrar</v-btn>
-      </v-form>
-      <notify-component v-if="notification" :type="notification.type" :message="notification.message" />
-    </v-container>
+    <v-main>
+      <v-container fluid class="fill-height">
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="4">
+            <v-card class="pa-6" elevation="10">
+              <v-card-title class="text-h6 mb-4">Login</v-card-title>
+
+              <v-form @submit.prevent="login" ref="form">
+                <v-text-field
+                  v-model="email"
+                  label="Email"
+                  prepend-inner-icon="mdi-email"
+                  required
+                ></v-text-field>
+
+                <v-text-field
+                  v-model="password"
+                  label="Senha"
+                  type="password"
+                  prepend-inner-icon="mdi-lock"
+                  required
+                ></v-text-field>
+
+                <v-btn
+                  type="submit"
+                  color="primary"
+                  block
+                  class="mt-4"
+                >
+                  Entrar
+                </v-btn>
+              </v-form>
+
+              <v-divider class="my-4"></v-divider>
+
+              <v-btn
+                text
+                color="secondary"
+                block
+                @click="goToRegister"
+              >
+                Ainda não tem conta? Cadastre-se
+              </v-btn>
+
+              <notify-component
+                v-if="notification"
+                :type="notification.type"
+                :message="notification.message"
+                class="mt-4"
+              />
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
@@ -37,6 +84,9 @@ export default {
         const message = err.response?.data?.message || 'Erro ao logar'
         this.notification = { type: 'error', message }
       }
+    },
+    goToRegister() {
+      window.location.href = '/register'
     }
   }
 }
