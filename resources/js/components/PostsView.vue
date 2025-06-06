@@ -3,7 +3,7 @@
     <v-container>
       <v-row justify="space-between" text-align="center" class="mb-5">
         <v-col cols="auto">
-          <h1 class="text-h4">Posts</h1>
+          <h1 class="text-h4">Postagens:</h1>
         </v-col>
         <v-col cols="auto">
           <v-btn class="mr-6" color="primary" @click="goToCreate">Criar Post</v-btn>
@@ -99,7 +99,7 @@ export default {
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
     }
     })
-        this.posts = this.posts.filter(post => Number(post.id) !== Number(id))
+        this.posts          = this.posts.filter(post => Number(post.id) !== Number(id))
         this.successMessage = 'Post excluído com sucesso!'
         
         this.showSuccess = true

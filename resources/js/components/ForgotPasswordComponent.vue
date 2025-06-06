@@ -2,24 +2,17 @@
   <v-app>
     <v-main>
       <v-container fluid class="fill-height">
-        <v-row align-items="center" justify="center">
+        <v-row align-itens="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="pa-6" elevation="10">
-              <v-card-title class="text-h6 mb-4">Login</v-card-title>
-              <v-form @submit.prevent="login" ref="form">
+              <v-card-title class="text-h6 mb-4">Recuperar Senha</v-card-title>
+
+              <v-form @submit.prevent="submit">
                 <v-text-field
                   v-model="email"
                   label="Email"
                   prepend-inner-icon="mdi-email"
-                  required
-                  :disabled="loading"
-                ></v-text-field>
-
-                <v-text-field
-                  v-model="password"
-                  label="Senha"
-                  type="password"
-                  prepend-inner-icon="mdi-lock"
+                  type="email"
                   required
                   :disabled="loading"
                 ></v-text-field>
@@ -28,20 +21,9 @@
                   type="submit"
                   color="primary"
                   block
-                  class="mt-4"
                   :disabled="loading"
                 >
-                  Entrar
-                </v-btn>
-                <v-btn
-                  text
-                  color = "primary"
-                  block
-                    class   = "mt-2"
-                    @click  = "goToForgot"
-                  :disabled = "loading"
-                >
-                  Esqueceu a senha?
+                  Enviar link de recuperação
                 </v-btn>
               </v-form>
 
@@ -51,10 +33,10 @@
                 text
                 color="secondary"
                 block
-                @click="goToRegister"
+                @click="goBack"
                 :disabled="loading"
               >
-                Ainda não tem conta? Cadastre-se
+                Voltar ao login
               </v-btn>
 
               <notify-component
@@ -80,44 +62,34 @@ export default {
   data() {
     return {
       email: '',
-      password: '',
-      notification: null,
       loading: false,
+      notification: null,
     }
   },
   methods: {
-    async login() {
+    async submit() {
       this.loading = true
       this.notification = null
+
       try {
-        await axios.post('/login', {
-          email: this.email,
-          password: this.password,
+        await axios.post('/forgot-password', {
+          email: this.email
         })
 
-        this.notification = { type: 'success', message: 'Login realizado com sucesso!' }
-
-        setTimeout(() => {
-          window.location.href = '/posts'
-        }, 1000)
-
-        // NÃO faz loading = false aqui, mantém travado até redirecionar
-
+        this.notification = {
+          type: 'success',
+          message: 'Se o email existir, um link de recuperação foi enviado.'
+        }
       } catch (err) {
-        const message = err.response?.data?.message || 'Erro ao logar'
+        const message = err.response?.data?.message || 'Erro ao enviar solicitação'
         this.notification = { type: 'error', message }
-        this.loading = false  // libera aqui só em erro
+      } finally {
+        this.loading = false
       }
     },
-    goToRegister() {
+    goBack() {
       if (!this.loading) {
-        window.location.href = '/register'
-      }
-    },
-
-    goToForgot() {
-      if (!this.loading) {
-        window.location.href = '/forgot-password'
+        window.location.href = '/login'
       }
     }
   }

@@ -13,6 +13,7 @@
                   v-model="name"
                   prepend-inner-icon="mdi-account"
                   required
+                  :disabled="loading"
                 ></v-text-field>
 
                 <v-text-field
@@ -20,6 +21,7 @@
                   v-model="email"
                   prepend-inner-icon="mdi-email"
                   required
+                  :disabled="loading"
                 ></v-text-field>
 
                 <v-text-field
@@ -28,6 +30,7 @@
                   type="password"
                   prepend-inner-icon="mdi-lock"
                   required
+                  :disabled="loading"
                 ></v-text-field>
 
                 <v-btn
@@ -35,6 +38,8 @@
                   color="success"
                   block
                   class="mt-4"
+                  :loading="loading"
+                  :disabled="loading"
                 >
                   Registrar
                 </v-btn>
@@ -44,9 +49,10 @@
 
               <v-btn
                 text
-                color="primary"
+                color = "primary"
                 block
                 @click="goToLogin"
+                :disabled="loading"
               >
                 Já tem uma conta? Faça login
               </v-btn>
@@ -78,11 +84,14 @@ export default {
       name: '',
       email: '',
       password: '',
-      notification: null
+      notification: null,
+      loading: false,
     }
   },
   methods: {
     async register() {
+      this.loading = true
+      this.notification = null
       try {
         await axios.post('/register', {
           name: this.name,
@@ -90,7 +99,8 @@ export default {
           password: this.password,
         })
         this.notification = { type: 'success', message: 'Registrado com sucesso!' }
-        setTimeout(() => window.location.href = '/login', 1000)
+        setTimeout(() => window.location.href = '/login', 2000)
+        // NÃO seta loading=false aqui, mantém botão travado até redirecionar
       } catch (err) {
         if (err.response?.status === 422) {
           const errors = err.response.data.errors
@@ -100,10 +110,13 @@ export default {
           const message = err.response?.data?.message || 'Erro ao registrar'
           this.notification = { type: 'error', message }
         }
+        this.loading = false // libera formulário em caso de erro
       }
     },
     goToLogin() {
-      window.location.href = '/login'
+      if (!this.loading) {
+        window.location.href = '/login'
+      }
     }
   }
 }

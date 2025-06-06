@@ -4,12 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Models\Post;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+
 
 Route::middleware('guest')->group(function () {
     Route::view('/login', 'login')->name('login');
     Route::view('/register', 'register');
+    Route::view('/forgot-password', 'forgot-password')->middleware('guest');
+    Route::post('/forgot-password', [UserController::class, 'sendResetLink']);
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->middleware('guest');
     Route::post('/register', [UserController::class, 'register']);
     Route::post('/login', [UserController::class, 'login']);
+    
 });
 
 // Redireciona para /home
