@@ -68,24 +68,20 @@ export default {
   },
   methods: {
     async submit() {
-      this.loading = true
-      this.notification = null
+    this.loading = true
+    this.notification = null
 
-      try {
-        await axios.post('/forgot-password', {
-          email: this.email
-        })
-
+    try {
+        const response = await axios.post('/forgot-password', { email: this.email })
+        this.notification = { type: 'success', message: response.data.message }
+    } catch (err) {
         this.notification = {
-          type: 'success',
-          message: 'Se o email existir, um link de recuperação foi enviado.'
+        type: 'error',
+        message: err.response?.data?.message || 'Erro ao enviar solicitação',
         }
-      } catch (err) {
-        const message = err.response?.data?.message || 'Erro ao enviar solicitação'
-        this.notification = { type: 'error', message }
-      } finally {
+    } finally {
         this.loading = false
-      }
+    }
     },
     goBack() {
       if (!this.loading) {
