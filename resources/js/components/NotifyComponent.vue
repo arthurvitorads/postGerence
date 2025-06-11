@@ -26,7 +26,7 @@ export default {
 }
 </script> -->
 <template>
-  <v-snackbar v-model="visible" :color="color" timeout="10000" data-testid="snackbar">
+  <v-snackbar v-model="visible" :color="color" timeout="1000" data-testid="snackbar">
     {{ message }}
   </v-snackbar>
 </template>

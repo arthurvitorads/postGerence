@@ -108,7 +108,7 @@ export default {
           password: this.password,
         })
         this.notification = { type: 'success', message: 'Registrado com sucesso!' }
-        setTimeout(() => window.location.href = '/login', 20000)
+        setTimeout(() => window.location.href = '/login', 1000)
       } catch (err) {
         if (err.response?.status === 422) {
           const errors = err.response.data.errors

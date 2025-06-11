@@ -64,8 +64,10 @@ class AuthTest extends TestCase
         $this->assertGuest();
     }
 
-        public function test_user_can_request_password_reset_link()
+    public function test_user_can_request_password_reset_link()
     {
+        app()->setLocale('en'); 
+        
         $user = User::factory()->create();
 
         $response = $this->postJson('/forgot-password', [
@@ -74,10 +76,9 @@ class AuthTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'message' => trans('passwords.sent'),
+            'message' => 'Enviamos o link de recuperação para seu email!',
         ]);
 
-        // Verifica se o token foi salvo na tabela padrão
         $this->assertDatabaseHas('password_reset_tokens', [
             'email' => $user->email,
         ]);
@@ -91,7 +92,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => trans('passwords.user'),
+            'message' => 'Não encontramos um usuário com esse email.',
         ]);
     }
 

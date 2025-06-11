@@ -61,7 +61,7 @@ describe('Post CRUD Flow', () => {
     cy.get('[data-testid="input-password"]').type(password)
     cy.get('[data-testid="btn-submit"]').click()
     cy.url().should('include', '/posts')
-    cy.contains(title)
+    cy.contains(updatedTitle)
         .closest('.v-card')
         .within(() => {
         cy.contains('Excluir').click()
@@ -69,6 +69,8 @@ describe('Post CRUD Flow', () => {
     cy.on('window:confirm', () => true)
     cy.contains(title, { timeout: 7000 }).should('not.exist')
     })
+
+
   it('Faz logout', () => {
     cy.visit('http://127.0.0.1:8000/login')
     cy.get('[data-testid="input-email"]').type(email)
