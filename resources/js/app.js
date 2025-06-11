@@ -1,8 +1,9 @@
 import './bootstrap'
-import Vue from 'vue/dist/vue.esm.js'  // já importa o Vue com o compilador
+import Vue from 'vue/dist/vue.esm.js'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import axios from 'axios'
+
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
@@ -10,7 +11,6 @@ Vue.prototype.$axios = axios;
 
 Vue.use(Vuetify)
 
-// Configura o Axios para usar o CSRF Token
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 const token = document.head.querySelector('meta[name="csrf-token"]');
@@ -21,10 +21,8 @@ if (token) {
   console.error('CSRF token not found in meta tag');
 }
 
-// Permitir envio de cookies de sessão (auth via Laravel)
 axios.defaults.withCredentials = true
 
-// Importa componentes
 import LoginComponent from './components/LoginComponent.vue'
 import RegisterComponent from './components/RegisterComponent.vue'
 import HomeComponent from './components/HomeComponent.vue'
@@ -34,19 +32,19 @@ import EditPost from './components/EditPost.vue'
 import ForgotPasswordComponent from './components/ForgotPasswordComponent.vue'
 import ResetPassword from './components/ResetPassword.vue'
 
+Vue.component('login-component', LoginComponent)
+Vue.component('register-component', RegisterComponent)
+Vue.component('home-component', HomeComponent)
+Vue.component('posts-view', PostsView)
+Vue.component('create-post', CreatePost)
+Vue.component('edit-post', EditPost)
+Vue.component('forgot-password-component', ForgotPasswordComponent)
+Vue.component('reset-password', ResetPassword)
+
+// Instância Vue
 new Vue({
   el: '#app',
   vuetify: new Vuetify(),
-  components: {
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    PostsView,
-    CreatePost,
-    EditPost,
-    ForgotPasswordComponent,
-    ResetPassword
-  },
   methods: {
     logout() {
       fetch('/logout', {
@@ -55,7 +53,7 @@ new Vue({
           'Content-Type': 'application/json',
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         },
-        credentials: 'include' // Inclui cookies na requisição fetch também
+        credentials: 'include'
       })
         .then(() => {
           window.location.href = '/login'

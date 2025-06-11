@@ -16,7 +16,7 @@ export default defineConfig({
     vue(),
   ],
   server: {
-    host: 'localhost',
+    host: true,
     port: 5173,
     hmr: {
       host: 'localhost',

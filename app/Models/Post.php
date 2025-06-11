@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Post extends Model
 {
     use SoftDeletes;
-    use HasFactory; // <- esta linha é obrigatória
+    use HasFactory;
 
     protected $fillable = ['user_id', 'title', 'description'];
 

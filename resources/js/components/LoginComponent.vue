@@ -7,32 +7,35 @@
             <v-card class="pa-6" elevation="10">
               <v-card-title class="text-h6 mb-4">Login</v-card-title>
               <v-form @submit.prevent="login" ref="form">
-                <v-text-field
-                  v-model="email"
-                  label="Email"
-                  prepend-inner-icon="mdi-email"
-                  required
-                  :disabled="loading"
-                ></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email"
+                prepend-inner-icon="mdi-email"
+                required
+                :disabled="loading"
+                data-testid="input-email"
+              />
 
-                <v-text-field
-                  v-model="password"
-                  label="Senha"
-                  type="password"
-                  prepend-inner-icon="mdi-lock"
-                  required
-                  :disabled="loading"
-                ></v-text-field>
+              <v-text-field
+                v-model="password"
+                label="Senha"
+                type="password"
+                prepend-inner-icon="mdi-lock"
+                required
+                :disabled="loading"
+                data-testid="input-password"
+              />
 
-                <v-btn
-                  type="submit"
-                  color="primary"
-                  block
-                  class="mt-4"
-                  :disabled="loading"
-                >
-                  Entrar
-                </v-btn>
+              <v-btn
+                type="submit"
+                color="primary"
+                block
+                class="mt-4"
+                :disabled="loading"
+                data-testid="btn-submit"
+              >
+                Entrar
+              </v-btn>
                 <v-btn
                   text
                   color = "primary"
@@ -101,12 +104,10 @@ export default {
           window.location.href = '/posts'
         }, 1000)
 
-        // NÃO faz loading = false aqui, mantém travado até redirecionar
-
       } catch (err) {
         const message = err.response?.data?.message || 'Erro ao logar'
         this.notification = { type: 'error', message }
-        this.loading = false  // libera aqui só em erro
+        this.loading = false 
       }
     },
     goToRegister() {

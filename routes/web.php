@@ -20,8 +20,8 @@ Route::middleware('guest')->group(function () {
     Route::view('/forgot-password', 'forgot-password')->name('password.request');
 
     // Envio do link para resetar a senha
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
-        ->name('password.email');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
 
     // Página de redefinir senha com token
     Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])

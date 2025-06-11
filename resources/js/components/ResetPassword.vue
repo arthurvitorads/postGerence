@@ -124,10 +124,8 @@ export default {
             type: 'success',
             message: response.data.message || 'Senha redefinida com sucesso!',
             }
-            // Mantém loading como true enquanto a mensagem aparece e aguarda redirecionar
             setTimeout(() => {
             this.goToLogin()
-            // Opcional: this.loading = false aqui não é necessário pois a página vai mudar
             }, 2000)
         } catch (err) {
             if (err.response?.data?.errors) {
@@ -139,7 +137,7 @@ export default {
                 message: err.response?.data?.message || 'Erro ao redefinir senha.',
             }
             }
-            this.loading = false // libera botões em caso de erro
+            this.loading = false
         }
         },
     goToLogin() {

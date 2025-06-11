@@ -18,8 +18,6 @@ class AuthTest extends TestCase
             'email' => 'joao@example.com',
             'password' => '123456',
         ]);
-
-        // Resposta que esperamos
         $response->assertStatus(200);
         $this->assertDatabaseHas('users', ['email' => 'joao@example.com']);
     }
@@ -51,21 +49,6 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    #[Test]
-    public function test_user_registration_successful()
-    {
-        $response = $this->postJson('/register', [
-            'name' => 'João Silva',
-            'email' => 'joao@example.com',
-            'password' => '123456',
-        ]);
-
-        $response->assertStatus(200);
-        $this->assertDatabaseHas('users', [
-            'email' => 'joao@example.com',
-        ]);
-    }
-
     public function test_user_cannot_login_with_invalid_credentials()
     {
         $user = User::factory()->create([
@@ -77,7 +60,39 @@ class AuthTest extends TestCase
             'password' => 'errado',
         ]);
 
-        $response->assertStatus(401); // Supondo que você retorna isso no controller
+        $response->assertStatus(401);
         $this->assertGuest();
     }
+
+        public function test_user_can_request_password_reset_link()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->postJson('/forgot-password', [
+            'email' => $user->email,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'message' => trans('passwords.sent'),
+        ]);
+
+        // Verifica se o token foi salvo na tabela padrão
+        $this->assertDatabaseHas('password_reset_tokens', [
+            'email' => $user->email,
+        ]);
+    }
+
+    public function test_password_reset_fails_with_invalid_email()
+    {
+        $response = $this->postJson('/forgot-password', [
+            'email' => 'emailinvalido@teste.com',
+        ]);
+
+        $response->assertStatus(422);
+        $response->assertJson([
+            'message' => trans('passwords.user'),
+        ]);
+    }
+
 }
