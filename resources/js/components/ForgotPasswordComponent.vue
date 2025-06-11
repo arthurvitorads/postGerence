@@ -6,25 +6,26 @@
           <v-col cols="12" sm="8" md="4">
             <v-card class="pa-6" elevation="10">
               <v-card-title class="text-h6 mb-4">Recuperar Senha</v-card-title>
-
               <v-form @submit.prevent="submit">
-                <v-text-field
-                  v-model="email"
-                  label="Email"
-                  prepend-inner-icon="mdi-email"
-                  type="email"
-                  required
-                  :disabled="loading"
-                ></v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Email"
+                prepend-inner-icon="mdi-email"
+                type="email"
+                required
+                :disabled="loading"
+                data-testid="input-email"
+              />
 
-                <v-btn
-                  type="submit"
-                  color="primary"
-                  block
-                  :disabled="loading"
-                >
-                  Enviar link de recuperação
-                </v-btn>
+              <v-btn
+                type="submit"
+                color="primary"
+                block
+                :disabled="loading"
+                data-testid="btn-submit"
+              >
+                Enviar link de recuperação
+              </v-btn>
               </v-form>
 
               <v-divider class="my-4"></v-divider>

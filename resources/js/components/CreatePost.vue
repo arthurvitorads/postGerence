@@ -3,7 +3,7 @@
     <v-container>
       <v-row class="mb-4" justify="space-between">
         <v-col cols="auto">
-          <h1 class="text-h4">Criar Post</h1>
+          <h1 class="text-h4 btn-create-post" data-testid="btn-create-post">Criar Post</h1>
         </v-col>
         <v-col cols="auto">
           <v-btn color="secondary" @click="goBack">Cancelar</v-btn>
@@ -11,26 +11,28 @@
       </v-row>
 
       <v-form @submit.prevent="submitPost" ref="form">
-        <v-text-field
-          v-model="form.title"
-          label="Título"
-          :error-messages="errors.title"
-          required
-          outlined
-          class="mb-4"
-        ></v-text-field>
+      <v-text-field
+        v-model="form.title"
+        label="Título"
+        :error-messages="errors.title"
+        required
+        outlined
+        class="mb-4"
+        data-testid="input-title"
+      />
 
-        <v-textarea
-          v-model="form.description"
-          label="Descrição"
-          :error-messages="errors.description"
-          rows="5"
-          required
-          outlined
-          class="mb-4"
-        ></v-textarea>
+      <v-textarea
+        v-model="form.description"
+        label="Descrição"
+        :error-messages="errors.description"
+        rows="5"
+        required
+        outlined
+        class="mb-4"
+        data-testid="input-description"
+      />
 
-        <v-btn type="submit" color="success">Salvar</v-btn>
+      <v-btn type="submit" color="success" data-testid="btn-submit">Salvar</v-btn>
       </v-form>
     </v-container>
   </v-app>

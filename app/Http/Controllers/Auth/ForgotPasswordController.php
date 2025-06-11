@@ -17,11 +17,11 @@ class ForgotPasswordController extends Controller
         );
 
         if ($status === Password::RESET_LINK_SENT) {
-            return response()->json(['message' => __($status)]);
+            return response()->json(['message' => 'Enviamos o link de recuperação para seu email!']);
         }
 
         return response()->json([
-            'message' => __($status)
+            'message' => 'Não encontramos um usuário com esse email.'
         ], 422);
     }
 }

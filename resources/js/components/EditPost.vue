@@ -11,26 +11,28 @@
       </v-row>
 
       <v-form @submit.prevent="updatePost" ref="form">
-        <v-text-field
-          v-model="form.title"
-          label="Título"
-          :error-messages="errors.title"
-          required
-          outlined
-          class="mb-4"
-        ></v-text-field>
+      <v-text-field
+        v-model="form.title"
+        label="Título"
+        :error-messages="errors.title"
+        required
+        outlined
+        class="mb-4"
+        data-testid="input-title"
+      />
 
-        <v-textarea
-          v-model="form.description"
-          label="Descrição"
-          :error-messages="errors.description"
-          rows="5"
-          required
-          outlined
-          class="mb-4"
-        ></v-textarea>
+      <v-textarea
+        v-model="form.description"
+        label="Descrição"
+        :error-messages="errors.description"
+        rows="5"
+        required
+        outlined
+        class="mb-4"
+        data-testid="input-description"
+      />
 
-        <v-btn type="submit" color="success">Atualizar</v-btn>
+      <v-btn type="submit" color="success" data-testid="btn-submit">Atualizar</v-btn>
       </v-form>
     </v-container>
   </v-app>
